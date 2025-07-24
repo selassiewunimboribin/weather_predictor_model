@@ -70,7 +70,7 @@ if st.button("Predict Weather"):
         "Rel Hum_%": rel_hum,
         "Wind Speed_km/h": wind_speed,
         "Visibility_km": visibility,
-        "Press_KPa": press,
+        "Press_kPa": press,
         "Day": day,
         "Month": month,
         **season_cols
@@ -91,12 +91,4 @@ if st.button("Predict Weather"):
     }
     predicted_label = label_mapping[prediction]
 
-    # Display result with black font
-    st.markdown(
-        f"""
-        <div style="padding: 1em; background-color: rgba(255, 255, 255, 0.7); border-radius: 10px; display: inline-block;">
-            <h3 style="color: black;">Predicted Weather: {predicted_label}</h3>
-        </div>
-        """,
-        unsafe_allow_html=True
-    )
+    st.success(f"Predicted Weather: **{predicted_label}**")
