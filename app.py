@@ -91,4 +91,14 @@ if st.button("Predict Weather"):
     }
     predicted_label = label_mapping[prediction]
 
-    st.success(f"Predicted Weather: **{predicted_label}**")
+    # --- Styled result display ---
+    st.markdown(
+        f"""
+        <div style="padding: 1em; background-color: rgba(255, 255, 255, 0.75); 
+                    border-radius: 10px; display: inline-block; 
+                    border: 2px solid black;">
+            <h3 style="color: black;">Predicted Weather: {predicted_label}</h3>
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
