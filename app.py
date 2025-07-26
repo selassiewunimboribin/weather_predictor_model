@@ -34,27 +34,45 @@ def set_bg_from_image(image_file_path):
     """
     st.markdown(css, unsafe_allow_html=True)
 
-# --- User inputs ---
+# --- UI Layout ---
 st.title("🌦️ Weather Classification App")
 st.markdown("Enter weather conditions to predict the class (e.g., Clear, Cloudy, Rain, etc.)")
 
-temp = st.number_input("Temperature (°C)", value=20.0)
-rel_hum = st.number_input("Relative Humidity (%)", value=50.0)
-wind_speed = st.number_input("Wind Speed (km/h)", value=10.0)
-visibility = st.number_input("Visibility (km)", value=20.0)
-press = st.number_input("Pressure (kPa)", value=101.0)
-day = st.slider("Day of the Month", 1, 31, 15)
-month = st.slider("Month", 1, 12, 6)
+# --- Input columns ---
+col1, col2, col3 = st.columns(3)
 
-# --- Determine season ---
+with col1:
+    st.markdown("<span style='font-weight:bold; color:black;'>Temperature (°C)</span>", unsafe_allow_html=True)
+    temp = st.number_input("", value=20.0)
+
+    st.markdown("<span style='font-weight:bold; color:black;'>Visibility (km)</span>", unsafe_allow_html=True)
+    visibility = st.number_input("", value=20.0)
+
+with col2:
+    st.markdown("<span style='font-weight:bold; color:black;'>Relative Humidity (%)</span>", unsafe_allow_html=True)
+    rel_hum = st.number_input("", value=50.0)
+
+    st.markdown("<span style='font-weight:bold; color:black;'>Pressure (kPa)</span>", unsafe_allow_html=True)
+    press = st.number_input("", value=101.0)
+
+with col3:
+    st.markdown("<span style='font-weight:bold; color:black;'>Wind Speed (km/h)</span>", unsafe_allow_html=True)
+    wind_speed = st.number_input("", value=10.0)
+
+    st.markdown("<span style='font-weight:bold; color:black;'>Day of the Month</span>", unsafe_allow_html=True)
+    day = st.slider("", 1, 31, 15)
+
+# Month slider and season
+st.markdown("<br>", unsafe_allow_html=True)
+month = st.slider("Month", 1, 12, 6)
 season = get_season(month)
 st.info(f"Season for Month {month}: **{season}**")
 
-# --- Set background image ---
+# Set background based on season
 background_path = f"images/{season.lower()}.jpg"
 set_bg_from_image(background_path)
 
-# --- One-hot encoding for season ---
+# One-hot encode season
 season_cols = {
     "season_Fall": 0,
     "season_Spring": 0,
@@ -63,7 +81,7 @@ season_cols = {
 }
 season_cols[f"season_{season}"] = 1
 
-# --- Predict button ---
+# Predict button
 if st.button("Predict Weather"):
     input_dict = {
         "Temp_C": temp,
@@ -91,7 +109,7 @@ if st.button("Predict Weather"):
     }
     predicted_label = label_mapping[prediction]
 
-    # --- Styled result display ---
+    # Display styled result
     st.markdown(
         f"""
         <div style="padding: 1em; background-color: rgba(255, 255, 255, 0.75); 
