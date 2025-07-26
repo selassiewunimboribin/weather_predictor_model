@@ -35,7 +35,7 @@ def set_bg_from_image(image_file_path):
     st.markdown(css, unsafe_allow_html=True)
 
 # --- User inputs ---
-st.title("🌦️ Weather Classification App")
+st.title("Weather Classification App")
 st.markdown("Enter weather conditions to predict the class (e.g., Clear, Cloudy, Rain, etc.)")
 
 st.markdown("<strong style='color:black;'>Temperature (°C)</strong>", unsafe_allow_html=True)
@@ -95,11 +95,7 @@ if st.button("Predict Weather"):
     # Make sure the column order matches what the model expects
     input_df = input_df.reindex(columns=model.feature_names_in_, fill_value=0)
 
-    # --- Debugging outputs ---
-    st.subheader(" Debug Info")
-    st.write("Model expects these features:", list(model.feature_names_in_))
-    st.write(" DataFrame being passed to model:")
-    st.dataframe(input_df)
+  
 
     # --- Prediction ---
     prediction = model.predict(input_df)[0]
